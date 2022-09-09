@@ -1,23 +1,19 @@
 from collections import Counter
+from inventory_report.reports.simple_report import SimpleReport
 
 
-class SimpleReport:
+class CompleteReport(SimpleReport):
 
     def generate(data):
-        sort_old = sorted(
-           data, key=lambda item: item["data_de_fabricacao"]
-        )
-        old = sort_old[0]["data_de_fabricacao"]
-        sort_close = sorted(
-            data, key=lambda item: item["data_de_validade"]
-        )
-        close = sort_close[0]["data_de_validade"]
-
+        companies_stock = ''
+        simpReport = SimpleReport.generate(data)
         company_counter = [item["nome_da_empresa"] for item in data]
         company = Counter(company_counter).most_common()
+        for key, value in company:
+            companies_stock += f"- {key}: {value}\n"
 
         return (
-            f"Data de fabricação mais antiga: {old}\n"
-            f"Data de validade mais próxima: {close}\n"
-            f"Empresa com mais produtos: {company[0][0]}"
+            f"{simpReport}\n"
+            "Produtos estocados por empresa:\n"
+            f"{companies_stock}"
         )

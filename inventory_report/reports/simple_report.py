@@ -14,7 +14,7 @@ class SimpleReport:
         close = sort_close[0]["data_de_validade"]
 
         company_counter = [item["nome_da_empresa"] for item in data]
-        company = Counter(company_counter).most_common(1)
+        company = Counter(company_counter).most_common()
 
         return (
             f"Data de fabricação mais antiga: {old}\n"
